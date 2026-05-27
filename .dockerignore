@@ -1,0 +1,40 @@
+# Maven wrapper и временные файлы
+.mvn/
+mvnw
+mvnw.cmd
+*.log
+*.iml
+
+# Вложенные target
+**/target/
+
+# Документация и мета-файлы
+*.md
+LICENSE
+.gitattributes
+.gitignore
+README.md
+
+# Docker-файлы
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Примеры конфигурации
+.env.example
+
+# Секреты (на случай, если попали в контекст)
+.env
+
+# Папка с логами (если монтируется)
+logs/
+app/logs/
+
+# Скрипты (не нужны в образе)
+scripts/

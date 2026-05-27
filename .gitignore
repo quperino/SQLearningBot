@@ -1,0 +1,73 @@
+# IDE (IntelliJ, OpenIDE, и др.)
+.idea/
+*.iml
+*.iws
+*.ipr
+amplicode.xml
+*.swp
+*.swo
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# NetBeans
+nbproject/
+nb-configuration.xml
+
+# Build tools (Maven, Gradle)
+target/
+build/
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle wrapper
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+
+# Логи
+logs/
+app/logs/
+*.log
+
+# Секреты и переменные окружения
+.env
+
+# Локальный Maven репозиторий
+.m2/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Временные файлы
+*.tmp
+*.pid
+*.lock
+*.bak
+*.orig
+*.rej
+
+# Дампы памяти
+*.hprof
+
+# Ваши скрипты (не включаем в публичный репозиторий)
+scripts/

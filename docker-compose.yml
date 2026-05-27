@@ -1,0 +1,60 @@
+services:
+  # ============================================================
+  # PostgreSQL 18.3
+  # ============================================================
+  postgres:
+    image: postgres:18.3-alpine3.23
+    container_name: sqlearningbot_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================
+  # RabbitMQ 4.2.5 с менеджментом (порты: 5672 – AMQP, 15672 – UI)
+  # ============================================================
+  rabbitmq:
+    image: rabbitmq:4.2.5-management-alpine
+    container_name: sqlearningbot_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    restart: unless-stopped
+
+  # ============================================================
+  # Приложение (собирается из Dockerfile)
+  # ============================================================
+  app:
+    build: .
+    container_name: sqlearningbot_app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_FLYWAY_ENABLED: "true"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
